@@ -1,0 +1,54 @@
+<template>
+  <Header class="headtemp">
+    <Row type="flex" align="middle" justify="space-between">
+      <Col span="18" :xs="8" :sm="8" :md="12" :lg="16" :xl="18" :xxl="18" order="1" class-name="head_left">
+        <Row type="flex" align="middle" justify="start">
+          <Col><img src="" alt="" class="log_img"></Col>
+          <Col :xs="0" :sm="0" :md="12" :lg="12" :xl="12" :xxl="12"><h3 class="log_tit">这是一个TITLE</h3></Col>
+        </Row>
+      </Col>
+      <Col span="6"  :xs="16" :sm="16" :md="12" :lg="8" :xl="6" :xxl="6" order="2"  class-name="head_right">
+        <Row type="flex" align="middle" justify="end">
+          <Col>
+            <span>欢迎您, <b style="cursor:pointer">{{username}}</b></span>
+            <Icon type="ios-contact" title="个人中心" @click="toPersonal"/>
+            <Icon type="ios-power" title="退出" @click="logout" />
+          </Col>
+        </Row>
+      </Col>
+    </Row>
+  </Header>
+</template>
+
+<script>
+  import fetch from './../../utils/fetch'
+  export default {
+    name: "headtemp",
+    props:{
+      username:String,
+      isLogin:Boolean,
+    },
+    data() {
+      return {}
+    },
+    watch:{
+      isLogin(value) {
+        !value && this.logout();
+      }
+    },
+    methods:{
+      logout(){
+        fetch("/common-portal/common/portal/logout").then(res => {
+          this.$router.push("/login")
+        })
+      },
+      toPersonal(){
+        window.location = 'http://test-a.yiche.com/static_common-portal/personal.html'
+      }
+    }
+  }
+</script>
+
+<style scoped>
+
+</style>
