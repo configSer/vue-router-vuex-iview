@@ -70,6 +70,7 @@
             } else {
               this.activeName = item.name;
               this.openArr = [item.name]
+              this.$router.push(item.path)
             }
           }
         });

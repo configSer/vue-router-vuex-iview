@@ -33,12 +33,19 @@
         vm.$store.commit('logout');
         vm.isLogin = false;
       }
-      vm.getUserInfo().then(res =>{
+      vm.getUserInfo().then(() =>{
         vm.username = vm.$store.state.userInfo.name;
         vm.companyId = vm.$store.state.userInfo.companyId;
         tools.getMasterFilter().then(data => {
           vm.$store.state.masterFilter = data.lists;
         })
+      },err => {
+        this.$router.push('/login');
+        if (err.errorCode === 50000) {
+          this.$Message.error('请重新登录');
+        } else {
+          this.$Message.error(err);
+        }
       });
     },
     methods:{

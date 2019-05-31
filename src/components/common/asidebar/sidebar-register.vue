@@ -5,8 +5,8 @@
             accordion
             :active-name="activeName"
             :open-names="openArr"
-            :on-open-change="openChange"
-            :on-select="selectChange"
+            @on-open-change="openChange"
+            @on-select="selectChange"
       >
         <Submenu v-for="item in browsRouteRegister" :key="item.routeName" :name="item.name">
           <template slot="title">
@@ -54,12 +54,22 @@
     },
     methods: {
       selectChange(name){
-        alert(1)
-        console.log(name)
+
       },
       openChange(value){
-        alert(2)
-        console.log(value)
+        this.browsRouteRegister.forEach((item,index) => {
+          if (item.name === value[0]){
+            if (item.children && item.children.length >0) {
+              this.activeName = item.children[0].name;
+              this.openArr = [item.name];
+              this.$router.push(item.children[0].path)
+            } else {
+              this.activeName = item.name;
+              this.openArr = [item.name];
+              this.$router.push(item.path)
+            }
+          }
+        });
       }
     }
   }

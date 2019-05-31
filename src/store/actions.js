@@ -3,7 +3,7 @@ import tools from "../utils/tools";
 
 export default {
   getUserInfo({state}) {
-    return new Promise(resolve => {
+    return new Promise((resolve,reject) => {
       fetch("/ssp-manager/v1/user/list").then(res => {
         if (res.errorCode === 0) {
           state.userInfo = res.result;
@@ -25,6 +25,8 @@ export default {
           
           resolve(res.result)
         }
+      },err => {
+        reject(err)
       })
     })
   }
