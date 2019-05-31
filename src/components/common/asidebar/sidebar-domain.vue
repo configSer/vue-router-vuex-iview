@@ -25,6 +25,9 @@
 
   export default {
     name: "asidebar",
+    props:{
+      setWidth:String,
+    },
     data() {
       return {
         browsRoute: [],

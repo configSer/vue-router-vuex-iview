@@ -3,8 +3,8 @@
     <Row type="flex" align="middle" justify="space-between">
       <Col span="18" :xs="8" :sm="8" :md="12" :lg="16" :xl="18" :xxl="18" order="1" class-name="head_left">
         <Row type="flex" align="middle" justify="start">
-          <Col><img src="" alt="" class="log_img"></Col>
-          <Col :xs="0" :sm="0" :md="12" :lg="12" :xl="12" :xxl="12"><h3 class="log_tit">这是一个TITLE</h3></Col>
+          <Col><img src="./../../assets/logo配置.png" alt="" class="log_img"></Col>
+          <Col span="12"><h3 class="log_tit">这是一个TITLE</h3></Col>
         </Row>
       </Col>
       <Col span="6"  :xs="16" :sm="16" :md="12" :lg="8" :xl="6" :xxl="6" order="2"  class-name="head_right">

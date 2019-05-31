@@ -16,7 +16,7 @@
       companyId:String,
     },
     data() {
-      return {}
+      return { }
     }
   }
 </script>

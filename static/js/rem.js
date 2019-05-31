@@ -19,4 +19,5 @@
     ? wid/xl * 10 : wid >= xxl
     ? wid/xxl * 10 : 10;
   document.documentElement.style.fontSize = fontSize +"px";
+  window.onresize = function(){document.location.reload()}
 }());
