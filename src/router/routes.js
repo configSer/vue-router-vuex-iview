@@ -9,6 +9,8 @@ import Block from '@/components/resource-deployment/block'
 import Grade from '@/components/resource-deployment/grade'
 import Rotation from '@/components/resource-deployment/rotation'
 
+import DSP from '@/components/DSP-management/dsp-manager'
+
 import Nofond from '@/components/common/notfontd'
 import Login from '@/components/common/login'
 
@@ -28,6 +30,7 @@ var routes = [
     name: 'i0',
     routeName: "",
     component: Layout,
+    redirect:'/index/media',
     children: [
       {
         path: '/index/media',
@@ -60,6 +63,7 @@ var routes = [
     name: "i1",
     routeName: "",
     component: Layout,
+    redirect:'/deployment/block',
     children: [
       {
         path: "/deployment/block",
@@ -82,6 +86,19 @@ var routes = [
     ]
   },
   {
+    path: "/dsp",
+    routeName: "",
+    component: Layout,
+    redirect:'/dsp/index',
+    children:[
+      {
+        path:'/dsp/index',
+        name:'i2',
+        component: DSP,
+      }
+    ]
+  },
+  {
     path: '*',
     redirect: "/404",
   },
@@ -96,7 +113,7 @@ var routes = [
 export const browsRoute = {
   "/index": {
     path: '/index',
-    redirect:"/index/media",
+    redirect: "/index/media",
     name: 'i0',
     routeName: "第一梯队",
     children: [
@@ -124,7 +141,7 @@ export const browsRoute = {
   },
   "/deployment": {
     path: "/deployment",
-    redirect:"/deployment/block",
+    redirect: "/deployment/block",
     name: "i1",
     routeName: "第二梯队",
     children: [
@@ -144,12 +161,18 @@ export const browsRoute = {
         routeName: "第三页",
       }
     ]
+  },
+  "/dsp": {
+    path: "/dsp",
+    redirect: "/dsp/index",
+    name: "i2",
+    routeName: "第三梯队",
   }
 };
 export const browsRouteRegister = {
   "/index": {
     path: '/index',
-    redirect:"/index/media",
+    redirect: "/index/media",
     name: 'i0',
     routeName: "第一梯队",
     children: [
@@ -177,7 +200,7 @@ export const browsRouteRegister = {
   },
   "/deployment": {
     path: "/deployment",
-    redirect:"/deployment/block",
+    redirect: "/deployment/block",
     name: "i1",
     routeName: "第二梯队",
     children: [
@@ -197,6 +220,12 @@ export const browsRouteRegister = {
         routeName: "第三页",
       }
     ]
+  },
+  "/dsp": {
+    path: "/dsp",
+    redirect: "/dsp/index",
+    name: "i2",
+    routeName: "第三梯队",
   }
 };
 

@@ -12,5 +12,11 @@ export default{
   setMasterId(state,value) {
     state.masterId = value;
     tools.setGlobal("masterId",value);
+  },
+  setUserInfo(state,info){
+    state.userInfo = info;
+  },
+  setMasterFilter(state,list){
+    state.masterFilter = list;
   }
 }

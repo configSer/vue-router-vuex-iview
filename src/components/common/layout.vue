@@ -27,17 +27,35 @@
       let vm = this;
       let type = sessionStorage.getItem('type');
       if (type && type === '1') {
-        vm.$store.commit('login');
+        vm.$store.dispatch('showLogin');
         vm.isLogin = true;
       } else {
-        vm.$store.commit('logout');
+        vm.$store.dispatch('hideLogin');
         vm.isLogin = false;
       }
-      vm.getUserInfo().then(() =>{
+      tools.getUserInfo().then((res) =>{
+        if (res.errorCode === 0) {
+          vm.$store.dispatch('getUserInfo',res.result);
+          tools.setGlobal("companyId",res.result.companyId);
+          if (res.result.companyId === '1') {
+
+            let masteId = parseInt(tools.getGlobal("masterId"));
+            if (masteId && res.result.masterIds.indexOf(masteId) !== -1) {
+              vm.$store.commit('setMasterId',parseInt(masteId))
+            } else {
+              vm.$store.commit('setMasterId',parseInt(res.result.masterIds.split(',')[0]))
+              tools.setGlobal("masterId",state.masterId);
+            }
+
+          } else {
+            vm.$store.commit('setMasterId',parseInt(res.result.masterIds))
+            tools.setGlobal("masterId",res.result.masterIds);
+          }
+        }
         vm.username = vm.$store.state.userInfo.name;
         vm.companyId = vm.$store.state.userInfo.companyId;
         tools.getMasterFilter().then(data => {
-          vm.$store.state.masterFilter = data.lists;
+          vm.$store.dispatch('getMsterFilter',data.result.lists)
         })
       },err => {
         this.$router.push('/login');
@@ -47,9 +65,6 @@
           this.$Message.error(err);
         }
       });
-    },
-    methods:{
-      ...mapActions({getUserInfo:'getUserInfo'})
     },
   }
 </script>

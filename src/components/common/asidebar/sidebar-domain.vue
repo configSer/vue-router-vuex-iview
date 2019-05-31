@@ -1,5 +1,5 @@
 <template>
-    <Menu theme="dark"
+    <Menu theme="light"
           mode="vertical"
           ref="side_menu"
           accordion
