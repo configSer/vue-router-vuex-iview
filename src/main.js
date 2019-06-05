@@ -4,7 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import IView from 'iview';
-import store from './store/index'
+import store from './store'
 import md5 from 'js-md5';
 import fetch from './utils/fetch'
 import 'iview/dist/styles/iview.css'

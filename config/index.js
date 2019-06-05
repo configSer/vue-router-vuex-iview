@@ -51,22 +51,19 @@ module.exports = {
 
     cssSourceMap: true
   },
-
   build: {
     // Template for index.html
     index: path.resolve(__dirname, '../dist/index.html'),
-
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
-
+    assetsPublicPath: 'http://test-a.yiche.com/static_admin/', // 测试
+    // assetsPublicPath: 'https://a.yiche.com/static_admin/', // 线上
+    // assetsPublicPath: 'http://sbox-a.yiche.com/static_admin/', // 沙盒
     /**
      * Source Maps
      */
-
-    productionSourceMap: true,
-    // https://webpack.js.org/configuration/devtool/#production
+    productionSourceMap: false,
     devtool: '#source-map',
 
     // Gzip off by default as many popular static hosts such as

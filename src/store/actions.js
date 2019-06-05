@@ -1,6 +1,3 @@
-import fetch from "../utils/fetch";
-import tools from "../utils/tools";
-
 export default {
   showLogin(context){
     context.commit('login')

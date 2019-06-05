@@ -43,8 +43,8 @@
             if (masteId && res.result.masterIds.indexOf(masteId) !== -1) {
               vm.$store.commit('setMasterId',parseInt(masteId))
             } else {
-              vm.$store.commit('setMasterId',parseInt(res.result.masterIds.split(',')[0]))
-              tools.setGlobal("masterId",state.masterId);
+              vm.$store.commit('setMasterId',parseInt(res.result.masterIds.split(',')[0]));
+              tools.setGlobal("masterId",parseInt(res.result.masterIds.split(',')[0]));
             }
 
           } else {
