@@ -16,8 +16,8 @@
     },
     methods:{
       selectChange(id){
-        this.$store.commit('setMasterId',parseInt(id));
-        tools.setGlobal("masterId",parseInt(id))
+        this.$store.commit('setMasterId',Number(id));
+        tools.setGlobal("masterId",Number(id))
       }
     },
 

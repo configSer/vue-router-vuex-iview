@@ -39,6 +39,7 @@
     methods:{
       logout(){
         fetch("/common-portal/common/portal/logout").then(res => {
+          this.$store.dispatch('hideLogin');
           this.$router.push("/login")
         })
       },

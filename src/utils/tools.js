@@ -35,11 +35,11 @@ let tools = {
       })
     })
   },
-  getMasterFilter(){
+  getMasterFilter(companyId){
     return new Promise( resolve => {
       fetch("/ssp-manager/v1/master_filter/list",{
         method:"post",
-        body:JSON.stringify({companyId:tools.getGlobal("companyId") ? tools.getGlobal("companyId") : store.state.userInfo.companyId })
+        body:JSON.stringify({companyId:companyId ? companyId : tools.getGlobal("companyId") })
       }).then(res => {
         resolve(res)
       })

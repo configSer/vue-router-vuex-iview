@@ -14,7 +14,7 @@
       return {master:-1}
     },
     mounted(){
-      this.master = tools.getGlobal('masterId') ? parseInt(tools.getGlobal('masterId')) : this.$store.state.masterId;
+      this.master = tools.getGlobal('masterId') ? Number(tools.getGlobal('masterId')) : this.$store.state.masterId;
     },
     watch:{
       '$store.state.masterId':{
@@ -28,7 +28,7 @@
     },
     computed:{
       ...mapState({
-        masterId(state){this.master = tools.getGlobal("masterId") ? parseInt(tools.getGlobal("masterId")) : state.masterId},
+        masterId(state){this.master = state.masterId ? tools.getGlobal("masterId") : Number(tools.getGlobal("masterId"));},
         masterFilter: state => state.masterFilter
       })
     }

@@ -11,4 +11,7 @@ export default {
   getUserInfo(context,info) {
     context.commit('setUserInfo',info);
   },
+  getMasterId(context,id){
+    context.commit('setMasterId',id);
+  }
 }

@@ -135,6 +135,11 @@ html, body, #app {
       cursor: pointer;
     }
   }
-
+}
+.lay_row:not(:nth-of-type(1)){
+  margin-top:2rem;
+  .lay_title{
+    margin-right:2rem;
+  }
 }
 

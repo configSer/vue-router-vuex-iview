@@ -100,4 +100,9 @@ html, body, #app {
     font-weight: bolder;
     cursor: pointer; }
 
+.lay_row:not(:nth-of-type(1)) {
+  margin-top: 2rem; }
+  .lay_row:not(:nth-of-type(1)) .lay_title {
+    margin-right: 2rem; }
+
 /*# sourceMappingURL=index.css.map */
