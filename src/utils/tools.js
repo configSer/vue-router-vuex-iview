@@ -26,6 +26,10 @@ let tools = {
   removeGlobal(key) {
     sessionStorage.removeItem(key);
   },
+  newWinRoute(url) {
+    let host = window.location.protocol + "//" + window.location.host + window.location.pathname;
+    window.open(host + "#" + url, "_blank");
+  },
   getUserInfo(){
     return new Promise((resolve,reject) => {
       fetch("/ssp-manager/v1/user/list").then(res => {

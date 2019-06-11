@@ -3,7 +3,7 @@
     <HeadTemp :username="username" :isLogin="isLogin"></HeadTemp>
     <Layout class="layout_content">
       <SideBar class="layout_side" :companyId="companyId"></SideBar>
-      <Content style="padding:2rem;">
+      <Content class="layout_scroll">
         <router-view/>
       </Content>
     </Layout>

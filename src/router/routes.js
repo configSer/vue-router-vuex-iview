@@ -1,6 +1,9 @@
 import Layout from '@/components/common/layout';
 
 import Media from '@/components/resource-manager/media'
+import MediaAdd from '@/components/resource-manager/media/media-add'
+import MediaEdit from '@/components/resource-manager/media/media-edit'
+
 import Channel from '@/components/resource-manager/channel'
 import Placement from '@/components/resource-manager/placement'
 import Tag from '@/components/resource-manager/tag'
@@ -32,6 +35,7 @@ var routes = [
     component: Layout,
     redirect:'/index/media',
     children: [
+      // media ======================================================
       {
         path: '/index/media',
         name: "i0-0",
@@ -39,17 +43,33 @@ var routes = [
         component: Media,
       },
       {
+        path: '/index/media/add',
+        name: "i0-0-0",
+        routeName: "",
+        component: MediaAdd,
+      },
+      {
+        path: '/index/media/edit/:id',
+        name: "i0-0-1",
+        routeName: "",
+        component: MediaEdit,
+      },
+      
+      // channel ==============================================
+      {
         path: '/index/channel',
         name: "i0-1",
         routeName: "",
         component: Channel,
       },
+      // placement ==============================================
       {
         path: '/index/placement',
         name: "i0-2",
         routeName: "",
         component: Placement,
       },
+      // tag =====================================================
       {
         path: '/index/tag',
         name: "i0-3",

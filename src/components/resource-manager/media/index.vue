@@ -7,7 +7,7 @@
       <Row type="flex" class-name="lay_row">
         <Col>
           <span class="lay_title">媒体列表</span>
-          <Button type="primary" icon="md-add">新建</Button>
+          <Button type="primary" icon="md-add" @click="newCreatTemp">新建</Button>
         </Col>
       </Row>
       <Row class-name="lay_row">
@@ -82,38 +82,38 @@
         },
         columns:[
           {
-            type:'selection',
-            width:60,
-            align:'center'
-          },
-          {
             title:'编号',
+            isShow:true,
             width:80,
             key:'id',
             align:'center',
           },
           {
             title:'媒体',
+            isShow:true,
             key:'name',
             align:'left',
           },
           {
             title:'媒体简称',
+            isShow:true,
             key:'shortName',
             align:'left',
           },
           {
             title:'媒体类型',
+            isShow:true,
             // width:80,
             key:'mediaType',
             align:'center',
           },
           {
             title:'投放平台',
+            isShow:true,
             // width:80,
             key:'platform',
             align:'center',
-          }
+          },
         ],
         options:{
           edit:{
@@ -126,6 +126,11 @@
           },
         },
 
+      }
+    },
+    watch:{
+      'formData.pageIndex'(value){
+        this.table.pageIndex = value;
       }
     },
     mounted(){
@@ -143,26 +148,38 @@
           vm.table.data = res.result.lists;
         })
       },
-      toSearchData(value){
+      toSearchData(){
+        this.setFormParam({name:"pageIndex",value:1});
         this.getTableData();
       },
-      setSelection(){
-
+      newCreatTemp(){
+        tools.newWinRoute("/index/media/add");
+      },
+      setSelection(row){
+        console.log(row)
       },
       setSelectAll(){
 
       },
-      pageChange(){
-
+      pageChange(pageIndex){
+        this.setFormParam({name:"pageIndex",value:pageIndex});
+        this.getTableData();
       },
-      pageSizeChange(){
-
+      pageSizeChange(pageSize){
+        this.setFormParam({name:'pageSize',value:pageSize});
+        this.setFormParam({name:"pageIndex",value:1});
+        this.getTableData();
       },
-      mediaEdit(){
-
+      mediaEdit(id){
+        tools.newWinRoute("/index/media/edit/"+id);
       },
-      mediaDelete(){
-
+      mediaDelete(id){
+        let vm = this;
+        fetch(`/ssp-manager/v1/media/checkDelSource?id=${id}&type=1`).then(res => {
+            console.log(res)
+        },err => {
+          this.$Message.warning(err.errorMsg,3000)
+        })
       }
     },
 

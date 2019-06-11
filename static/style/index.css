@@ -70,7 +70,16 @@ html, body, #app {
     height: 100%;
     padding-top: 75px;
     z-index: 888;
-    background: #363E4F; }
+    -background: #363E4F; }
+    .layout_all .layout_side > ul {
+      height: 100%; }
+  .layout_all .layout_scroll {
+    padding: 2rem;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden; }
+    .layout_all .layout_scroll::-webkit-scrollbar {
+      display: none; }
 
 .headtemp {
   width: 100%;
