@@ -147,10 +147,24 @@ html, body, #app {
     }
   }
 }
+
 .lay_row:not(:nth-of-type(1)){
   margin-top:2rem;
   .lay_title{
     margin-right:2rem;
   }
+  .total_checkbox{
+    margin-left:2rem;
+  }
+  .data_total{
+    margin-right:1rem;
+  }
+  .clear_data{
+    margin-left:1rem;
+    color:#0c7cd5;
+    cursor:pointer;
+  }
 }
+
+
 

@@ -24,6 +24,15 @@
         ></Input>
       </Col>
     </Row>
+    <Row class-name="lay_row" type="flex" justify="space-between" align="middle"  style="margin-top:5rem;">
+      <Col>
+        <Checkbox v-model="isCheckedAll" class="total_checkbox" @on-change="allDataChecked">全选</Checkbox>
+        <span class="data_total">(共{{total}}项)</span>
+        <span>已选{{selectNum}}项</span>
+        <span class="clear_data" @click="allDataChecked(false)">清空选择</span>
+      </Col>
+      <Col></Col>
+    </Row>
     <Row class-name="lay_row">
       <Col>
         <ListData :table-data="table.data"
@@ -38,6 +47,7 @@
                   :page-change="pageChange"
                   :page-size-change="pageSizeChange"
                   :options="options"
+                  :isSelectAll="isCheckedAll"
         />
       </Col>
     </Row>
@@ -58,6 +68,10 @@
     components: {MasterFilter, DatePickerCustom, ListData},
     data() {
       return {
+        total:0,
+        selectNum:0,
+        idList:[],
+        isCheckedAll:false,
         //表单提交的数据
         formData: {
           qStr: "",
@@ -139,6 +153,14 @@
       },
       'table.data'(value) {
         this.setCheckedData(value)
+      },
+      checkedDataArr(value){
+        this.selectNum = value.length;
+        if (this.idList.length === value.length){
+          this.isCheckedAll = true;
+        } else {
+          this.isCheckedAll = false;
+        }
       }
     },
     mounted() {
@@ -154,6 +176,8 @@
         }).then(res => {
           vm.table.total = res.result.totalPages;
           vm.table.data = res.result.lists;
+          vm.idList = res.result.idlist.split(',');
+          vm.total = res.result.totalPages;
         })
       },
       toSearchData() {
@@ -164,35 +188,57 @@
         tools.newWinRoute("/index/media/add");
       },
       setSelection(selection, row) {
-        if (JSON.stringify(selection).indexOf(JSON.stringify(row)) === -1) {
-          this.checkedDataArr.forEach((item, i) => {
-            if (item.id === row.id) this.checkedDataArr.splice(i, 1);
+        let flag = selection.some(item => {return item.id === row.id;});
+        let bool = this.checkedDataArr.some(item => {return item.id === row.id});
+        if ( flag && !bool) {
+          this.checkedDataArr.push({...row,_checked:true})
+          this.table.data = this.table.data.map(item => {
+            if (item.id === row.id) {
+              item._checked = true
+            }
+            return item;
+          });
+        } else if ( !flag && bool) {
+          this.checkedDataArr.forEach( (item,i) => {
+            if (item.id === row.id) this.checkedDataArr.splice(i,1);
+            this.table.data = this.table.data.map(item => {
+              if (item.id === row.id) {
+                item._checked = false;
+              }
+              return item;
+            });
           })
-        } else {
-          this.checkedDataArr.push(row);
         }
       },
       setSelectAll(selection) {
-        let vm = this;
-        if (selection.length > 0) {
-          let idArr = vm.checkedDataArr.map(item => item.id);
-          vm.table.data.forEach((item) => {
-            if (idArr.indexOf(item.id) === -1) vm.checkedDataArr.push(item)
-          })
-        } else {
-          let idArr = vm.table.data.map(item => item.id);
-          let count = vm.checkedDataArr.length;
-          for (let a = count-1; a >= 0; a --){
-            if (idArr.indexOf(vm.checkedDataArr[a].id) !== -1) {
-              vm.checkedDataArr.splice(a,1);
-            }
+        if (selection.length) {
+          this.table.data = this.table.data.map(item => {return {...item,_checked:true}});
+          if (!this.isCheckedAll){
+            let idArr = this.checkedDataArr.map(item => item.id);
+            this.table.data.forEach(item => {
+              if (idArr.indexOf(item.id) === -1) {
+                this.checkedDataArr.push(item);
+              }
+            })
           }
+        } else {
+          this.table.data = this.table.data.map(item => {return {...item,_checked:false}});
+          this.isCheckedAll = false;
+          this.table.data.forEach(item => {
+            this.checkedDataArr.forEach((temp,i) => {
+              if (item.id === temp.id) {
+                temp._checked = false;
+                this.checkedDataArr.splice(i,1)
+              }
+            })
+          });
         }
       },
-      setCheckedData() {
-        let vm = this;
-        let idArr = vm.checkedDataArr.map(item => item.id);
-        vm.table.data.map(item => { idArr.indexOf(item.id) === -1 ?  item._checked = false : item._checked = true;})
+      setCheckedData(value){
+        console.log(value);
+      },
+      allDataChecked(bool){
+        
       },
       pageChange(pageIndex) {
         this.setFormParam({name: "pageIndex", value: pageIndex});
@@ -211,11 +257,11 @@
         fetch(`/ssp-manager/v1/media/checkDelSource?id=${id}&type=1`).then(res => {
           console.log(res)
         }, err => {
-          this.$Message.warning(err.errorMsg, 3000)
+          vm.$Message.warning(err.errorMsg, 3000)
         })
-      }
-    },
+      },
 
+    }
   }
 </script>
 
