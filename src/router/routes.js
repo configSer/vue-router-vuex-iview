@@ -135,27 +135,32 @@ export const browsRoute = {
     path: '/index',
     redirect: "/index/media",
     name: 'i0',
-    routeName: "第一梯队",
+    routeName: "资源管理",
+    icon: require('./../../static/icon/ziyuan.svg'),
     children: [
       {
         path: '/index/media',
         name: "i0-0",
-        routeName: "第一页",
+        routeName: "媒体",
+        icon: require('./../../static/icon/media.svg'),
       },
       {
         path: '/index/channel',
         name: "i0-1",
-        routeName: "第二页",
+        routeName: "频道",
+        icon: require('./../../static/icon/channel.svg'),
       },
       {
         path: '/index/placement',
         name: "i0-2",
-        routeName: "第三页",
+        routeName: "广告位",
+        icon: require('./../../static/icon/place.svg'),
       },
       {
         path: '/index/tag',
         name: "i0-3",
-        routeName: "第四页",
+        routeName: "标签",
+        icon: require('./../../static/icon/tag.svg'),
       }
     ]
   },
@@ -163,22 +168,26 @@ export const browsRoute = {
     path: "/deployment",
     redirect: "/deployment/block",
     name: "i1",
-    routeName: "第二梯队",
+    routeName: "资源部署",
+    icon: require('./../../static/icon/ziyuan_1.svg'),
     children: [
       {
         path: "/deployment/block",
         name: "i1-0",
-        routeName: "第一页",
+        routeName: "广告块",
+        icon: require('./../../static/icon/blocks.svg'),
       },
       {
         path: "/deployment/rotation",
         name: "i1-1",
-        routeName: "第二页",
+        routeName: "轮播关系",
+        icon: require('./../../static/icon/lunbo.svg'),
       },
       {
         path: "/deployment/grade",
         name: "i1-2",
-        routeName: "第三页",
+        routeName: "车型级别关系",
+        icon: require('./../../static/icon/car.svg'),
       }
     ]
   },
@@ -186,7 +195,8 @@ export const browsRoute = {
     path: "/dsp",
     redirect: "/dsp/index",
     name: "i2",
-    routeName: "第三梯队",
+    routeName: "DSP管理",
+    icon: require('./../../static/icon/dianshangpingtaikaifa.svg'),
   }
 };
 export const browsRouteRegister = {

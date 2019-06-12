@@ -7,8 +7,10 @@
            :loading="loadingData"
            no-data-text="暂无数据"
            no-filtered-data-text="没有检索到您要的数据"
-           @on-selection-change="setSelection"
+           @on-select="setSelection"
+           @on-select-cancel="setSelection"
            @on-select-all="setSelectAll"
+           @on-select-all-cancel="setSelectAll"
     ></Table>
     <Page :total="total"
           :current="currentPage"
@@ -62,6 +64,9 @@
         deep: true
       })
 
+    },
+    mounted(){
+      // console.log(this.$refs.selection)
     },
     methods: {
       setEditColumn() {

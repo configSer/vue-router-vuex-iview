@@ -10,11 +10,14 @@
     >
       <Submenu v-for="item in browsRoute" :key="item.routeName" :name="item.name">
         <template slot="title">
-          <Icon type="ios-paper"/>
+          <img :src="item.icon" alt="">
           {{item.routeName}}
         </template>
         <router-link v-for="temp in item.children" :to="temp.path" :key="temp.routeName">
-          <MenuItem :name="temp.name">{{temp.routeName}}</MenuItem>
+          <MenuItem :name="temp.name">
+            <img :src="temp.icon" alt="">
+            {{temp.routeName}}
+          </MenuItem>
         </router-link>
       </Submenu>
     </Menu>
@@ -80,5 +83,7 @@
 </script>
 
 <style scoped>
-
+  img{
+    height:1rem;
+  }
 </style>
