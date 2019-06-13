@@ -121,5 +121,63 @@ html, body, #app {
     margin-left: 1rem;
     color: #0c7cd5;
     cursor: pointer; }
+  .lay_row:not(:nth-of-type(1)) .add_btn {
+    width: 120px;
+    height: 38px;
+    font-size: 1.2rem; }
+
+.export_btn .sub_btn {
+  position: absolute;
+  bottom: 38px;
+  height: 0;
+  overflow: hidden;
+  transition: height 0.5s;
+  border-radius: 2px;
+  background: #e8eaec; }
+  .export_btn .sub_btn .sub_export_btn {
+    height: 38px;
+    width: 120px;
+    line-height: 38px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 2px;
+    font-size: 13px; }
+  .export_btn .sub_btn .sub_export_ratio {
+    height: 38px;
+    width: 120px;
+    line-height: 38px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 2px;
+    font-size: 13px; }
+.export_btn .btn_name {
+  width: 120px;
+  height: 38px; }
+.export_btn:hover .sub_btn_1 {
+  height: 38px; }
+.export_btn:hover .sub_btn_2 {
+  height: 76px; }
+.export_btn:hover .sub_btn_3 {
+  height: 114px; }
+.export_btn:hover .sub_btn_4 {
+  height: 152px; }
+.export_btn:hover .sub_btn_5 {
+  height: 190px; }
+.export_btn:hover .sub_btn_6 {
+  height: 228px; }
+.export_btn:hover .sub_btn_7 {
+  height: 266px; }
+.export_btn:hover .sub_btn_8 {
+  height: 304px; }
+.export_btn:hover .sub_btn_9 {
+  height: 342px; }
+
+.ivu-modal-body {
+  padding: 3rem; }
+
+.change_password .ivu-form-item-error-tip, .change_userinfo .ivu-form-item-error-tip {
+  left: 14rem; }
+.change_password .code, .change_userinfo .code {
+  width: 8rem; }
 
 /*# sourceMappingURL=index.css.map */

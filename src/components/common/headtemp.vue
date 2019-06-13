@@ -44,7 +44,7 @@
         })
       },
       toPersonal(){
-        window.location = 'http://test-a.yiche.com/static_common-portal/personal.html'
+        this.$store.dispatch('personal',true)
       }
     }
   }

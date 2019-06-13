@@ -11,7 +11,7 @@
     <Row type="flex" class-name="lay_row">
       <Col>
         <span class="lay_title">媒体列表</span>
-        <Button type="primary" icon="md-add" @click="newCreatTemp">新建</Button>
+        <Button class="add_btn" type="primary" icon="md-add" @click="newCreatTemp">新建</Button>
       </Col>
     </Row>
     <Row class-name="lay_row">
@@ -31,7 +31,17 @@
         <span>已选{{selectNum}}项</span>
         <span class="clear_data" @click="allDataChecked(false)">清空选择</span>
       </Col>
-      <Col></Col>
+      <Col>
+        <div class="export_btn">
+          <div class="sub_btn sub_btn_4">
+            <div class="sub_export_btn" data-flag="0">按日</div>
+            <div class="sub_export_btn" data-flag="1">按时</div>
+            <div class="sub_export_btn" data-flag="2">按平台</div>
+            <div class="sub_export_btn" data-flag="3">当前视图</div>
+          </div>
+          <Button type="primary" class="btn_name">导出报告</Button>
+        </div>
+      </Col>
     </Row>
     <Row class-name="lay_row">
       <Col>
@@ -151,9 +161,6 @@
       'formData.pageIndex'(value) {
         this.table.pageIndex = value;
       },
-      'table.data'(value) {
-        this.setCheckedData(value)
-      },
       checkedDataArr(value){
         this.selectNum = value.length;
         if (this.idList.length === value.length){
@@ -178,6 +185,7 @@
           vm.table.data = res.result.lists;
           vm.idList = res.result.idlist.split(',');
           vm.total = res.result.totalPages;
+          vm.setCheckedData(vm.table.data);
         })
       },
       toSearchData() {
@@ -187,77 +195,15 @@
       newCreatTemp() {
         tools.newWinRoute("/index/media/add");
       },
-      setSelection(selection, row) {
-        let flag = selection.some(item => {return item.id === row.id;});
-        let bool = this.checkedDataArr.some(item => {return item.id === row.id});
-        if ( flag && !bool) {
-          this.checkedDataArr.push({...row,_checked:true})
-          this.table.data = this.table.data.map(item => {
-            if (item.id === row.id) {
-              item._checked = true
-            }
-            return item;
-          });
-        } else if ( !flag && bool) {
-          this.checkedDataArr.forEach( (item,i) => {
-            if (item.id === row.id) this.checkedDataArr.splice(i,1);
-            this.table.data = this.table.data.map(item => {
-              if (item.id === row.id) {
-                item._checked = false;
-              }
-              return item;
-            });
-          })
-        }
-      },
-      setSelectAll(selection) {
-        if (selection.length) {
-          this.table.data = this.table.data.map(item => {return {...item,_checked:true}});
-          if (!this.isCheckedAll){
-            let idArr = this.checkedDataArr.map(item => item.id);
-            this.table.data.forEach(item => {
-              if (idArr.indexOf(item.id) === -1) {
-                this.checkedDataArr.push(item);
-              }
-            })
-          }
-        } else {
-          this.table.data = this.table.data.map(item => {return {...item,_checked:false}});
-          this.isCheckedAll = false;
-          this.table.data.forEach(item => {
-            this.checkedDataArr.forEach((temp,i) => {
-              if (item.id === temp.id) {
-                temp._checked = false;
-                this.checkedDataArr.splice(i,1)
-              }
-            })
-          });
-        }
-      },
-      setCheckedData(value){
-        console.log(value);
-      },
-      allDataChecked(bool){
-        
-      },
-      pageChange(pageIndex) {
-        this.setFormParam({name: "pageIndex", value: pageIndex});
-        this.getTableData();
-      },
-      pageSizeChange(pageSize) {
-        this.setFormParam({name: 'pageSize', value: pageSize});
-        this.setFormParam({name: "pageIndex", value: 1});
-        this.getTableData();
-      },
       mediaEdit(id) {
         tools.newWinRoute("/index/media/edit/" + id);
       },
       mediaDelete(id) {
         let vm = this;
         fetch(`/ssp-manager/v1/media/checkDelSource?id=${id}&type=1`).then(res => {
-          console.log(res)
+          vm.$Message.info({content:'请调用删除接口',duration:3})
         }, err => {
-          vm.$Message.warning(err.errorMsg, 3000)
+          vm.$Message.warning({content:err.errorMsg,duration:3})
         })
       },
 

@@ -3,4 +3,7 @@ export default {
   userInfo: {},
   masterFilter: [],
   masterId: -1,
+  showPersonal:false,
+  changePassword: false,
+  changeUserInfo: false,
 }

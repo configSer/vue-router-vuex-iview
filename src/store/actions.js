@@ -13,5 +13,14 @@ export default {
   },
   getMasterId(context,id){
     context.commit('setMasterId',id);
+  },
+  personal(context,flag) {
+    context.commit('showPersonal',flag)
+  },
+  changeInfo(context,flag) {
+    context.commit('changeUserInfo',flag)
+  },
+  changeWord(context,flag) {
+    context.commit('changePass',flag)
   }
 }

@@ -18,5 +18,14 @@ export default{
   },
   setMasterFilter(state,list){
     state.masterFilter = list;
+  },
+  showPersonal(state,flag){
+    state.showPersonal = flag;
+  },
+  changePass(state,flag){
+    state.changePassword = flag;
+  },
+  changeUserInfo(state,flag){
+    state.changeUserInfo =  flag;
   }
 }

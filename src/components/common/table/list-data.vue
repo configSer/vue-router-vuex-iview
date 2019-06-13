@@ -21,6 +21,7 @@
           @on-change="pageChange"
           @on-page-size-change="pageSizeChange"
           class="paginational"
+          v-if="tableData.length"
     ></Page>
   </div>
 </template>

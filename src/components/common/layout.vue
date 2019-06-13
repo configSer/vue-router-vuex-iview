@@ -5,20 +5,27 @@
       <SideBar class="layout_side" :companyId="companyId"></SideBar>
       <Content class="layout_scroll">
         <router-view/>
+        <Footer style="text-align:center;">2014-永远 &copy; 你是我的眼</Footer>
       </Content>
     </Layout>
+    <Personal></Personal>
+    <ChangePwd></ChangePwd>
+    <ChangeInfo></ChangeInfo>
   </Layout>
 </template>
 
 <script>
   import HeadTemp from './headtemp'
   import SideBar from './asidebar/index'
+  import Personal from '../personal/personalModal'
+  import ChangePwd from '../personal/changePassword'
+  import ChangeInfo from '../personal/changeUserInfo'
   import {mapActions} from 'vuex'
   import tools from './../../utils/tools'
 
   export default {
     name: "layout",
-    components: {SideBar, HeadTemp},
+    components: {SideBar, HeadTemp, Personal, ChangeInfo, ChangePwd},
     data() {
       return {
         username: "",
