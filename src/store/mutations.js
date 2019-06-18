@@ -27,5 +27,8 @@ export default{
   },
   changeUserInfo(state,flag){
     state.changeUserInfo =  flag;
+  },
+  routeChange(state){
+    state.isRouteChange = true;
   }
 }

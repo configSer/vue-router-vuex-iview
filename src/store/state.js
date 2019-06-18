@@ -6,4 +6,5 @@ export default {
   showPersonal:false,
   changePassword: false,
   changeUserInfo: false,
+  isRouteChange:false,
 }

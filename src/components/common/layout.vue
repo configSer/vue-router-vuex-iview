@@ -33,6 +33,11 @@
         isLogin: true,
       }
     },
+    watch:{
+      $route(){
+        this.$store.commit('routeChange');
+      }
+    },
     mounted() {
       let vm = this;
       let type = tools.getGlobal('type');

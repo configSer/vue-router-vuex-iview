@@ -1,12 +1,8 @@
 <template>
   <div class='media_index'>
     <Row type="flex" justify="space-between" align="middle" class-name="lay_row">
-      <Col>
-        <MasterFilter :select-change="selectChange"></MasterFilter>
-      </Col>
-      <Col>
-        <DatePickerCustom :change-date-handler="dateChange" :datePicker="datePicker"></DatePickerCustom>
-      </Col>
+      <Col><MasterFilter :select-change="selectChange"></MasterFilter></Col>
+      <Col><DatePickerCustom :change-date-handler="dateChange" :datePicker="datePicker"></DatePickerCustom></Col>
     </Row>
     <Row type="flex" class-name="lay_row">
       <Col>
@@ -26,7 +22,7 @@
     </Row>
     <Row class-name="lay_row" type="flex" justify="space-between" align="middle"  style="margin-top:5rem;">
       <Col>
-        <Checkbox v-model="isCheckedAll" class="total_checkbox" @on-change="allDataChecked">全选</Checkbox>
+        <Checkbox v-model="isCheckedAll" class="total_checkbox" @on-change="allDataChecked" :disabled="table.data.length === 0">全选</Checkbox>
         <span class="data_total">(共{{total}}项)</span>
         <span>已选{{selectNum}}项</span>
         <span class="clear_data" @click="allDataChecked(false)">清空选择</span>
@@ -90,8 +86,6 @@
           endTime: "",
           pageIndex: 1,
           pageSize: 10,
-          orderBy: "",
-          orderType: "",
         },
         //datepicker初始化配置
         datePicker: {
@@ -155,6 +149,7 @@
           },
         },
         checkedDataArr: [],
+
       }
     },
     watch: {
@@ -168,10 +163,19 @@
         } else {
           this.isCheckedAll = false;
         }
+      },
+      '$store.state.masterId'(id){
+        if (id >0) {
+          this.setFormParam({name:'masterIds',value:id});
+          this.getTableData();
+        }
       }
     },
     mounted() {
-      this.getTableData();
+      if(this.$store.state.isRouteChange){
+        this.setFormParam({name:'masterIds',value:tools.getGlobal('masterId') ? Number(tools.getGlobal('masterId')) : this.$store.state.masterIds});
+        this.getTableData();
+      }
     },
     methods: {
       //请求表格数据

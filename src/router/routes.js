@@ -5,6 +5,9 @@ import MediaAdd from '@/components/resource-manager/media/media-add'
 import MediaEdit from '@/components/resource-manager/media/media-edit'
 
 import Channel from '@/components/resource-manager/channel'
+import ChannelAdd from '@/components/resource-manager/channel/channel-add'
+import ChannelEdit from '@/components/resource-manager/channel/channel-edit'
+
 import Placement from '@/components/resource-manager/placement'
 import Tag from '@/components/resource-manager/tag'
 
@@ -61,6 +64,18 @@ var routes = [
         name: "i0-1",
         routeName: "",
         component: Channel,
+      },
+      {
+        path: '/index/channel/add',
+        name: "i0-1-0",
+        routeName: "",
+        component: ChannelAdd,
+      },
+      {
+        path: '/index/channel/edit/:id',
+        name: "i0-1-1",
+        routeName: "",
+        component: ChannelEdit,
       },
       // placement ==============================================
       {

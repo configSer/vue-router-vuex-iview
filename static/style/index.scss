@@ -227,4 +227,36 @@ html, body, #app {
   }
 }
 
+@for $i from 1 through 40{
+  .width_#{$i}{
+    width: 50px * $i;
+  }
+}
+
+.ivu-select-dropdown{
+  max-height:400px;
+  position:relative;
+  max-width:200px;
+}
+
+.selectbar{
+  .opt_row{
+    margin-top:1rem;
+  }
+  .list_box{
+    max-height:200px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  .foot_box{
+    height:50px;
+    border-top:1px solid rgba(100,100,100,.2);
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    .ivu-col{
+      cursor: pointer;
+    }
+  }
+}
 
