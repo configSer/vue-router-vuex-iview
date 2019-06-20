@@ -11,13 +11,34 @@
     </Row>
     <Row type="flex" class-name="lay_row" :gutter="10">
       <Col  class="width_4">
-        <SelectBar :listData="mediaData" placeholder="请选择媒体" search-placeholder="请输入名称关键字或ID"></SelectBar>
+        <SelectBar :listData="mediaData"
+                   placeholder="请选择媒体"
+                   search-placeholder="请输入名称关键字或ID"
+                   :showDrop="showMediaDrop"
+                   dropIndex="1"
+                   @dropDown="setShowDrop"
+                   @setSelectData="setSelectData"
+        ></SelectBar>
       </Col>
       <Col class="width_4">
-        <SelectBar :listData="plateForm" placeholder="请选择投放平台" search-placeholder="请输入名称关键字或ID"></SelectBar>
+        <SelectBar :listData="plateForm"
+                   placeholder="请选择投放平台"
+                   search-placeholder="请输入名称关键字或ID"
+                   :showDrop="showFlateDrop"
+                   dropIndex="2"
+                   @dropDown="setShowDrop"
+                   @setSelectData="setSelectData"
+        ></SelectBar>
       </Col>
       <Col class="width_4">
-        <SelectBar :listData="plateTag" placeholder="请选择投放标签" search-placeholder="请输入名称关键字或ID"></SelectBar>
+        <SelectBar :listData="plateTag"
+                   placeholder="请选择投放标签"
+                   search-placeholder="请输入名称关键字或ID"
+                   :showDrop="showTagDrop"
+                   dropIndex="3"
+                   @dropDown="setShowDrop"
+                   @setSelectData="setSelectData"
+        ></SelectBar>
       </Col>
     </Row>
     <Row class-name="lay_row">
@@ -85,6 +106,9 @@
     components: {MasterFilter, DatePickerCustom, ListData, SelectBar},
     data() {
       return {
+        showMediaDrop:false,
+        showFlateDrop:false,
+        showTagDrop:false,
         total:0,
         selectNum:0,
         idList:[],
@@ -215,6 +239,36 @@
       }
     },
     methods: {
+      setSelectData(value){
+        if (value[1] === '1'){
+          this.setFormParam({name:'mediaIds',value:value[0].map(item => item.id).join()})
+        } else  if (value[1] === '2'){
+          this.setFormParam({name:'platefrom',value:value[0].map(item => item.id).join()})
+        } else  if (value[1] === '3'){
+          this.setFormParam({name:'channelType',value:value[0].map(item => item.id).join()})
+        }
+        this.getTableData();
+      },
+      setShowDrop(index){
+        if (index === '1'){
+          this.showMediaDrop = true;
+          this.showFlateDrop = false;
+          this.showTagDrop = false;
+        } else if(index === '2'){
+          this.showMediaDrop = false;
+          this.showFlateDrop = true;
+          this.showTagDrop = false;
+        } else  if(index === '3'){
+          this.showMediaDrop = false;
+          this.showFlateDrop = false;
+          this.showTagDrop = true;
+        } else {
+          this.showMediaDrop = false;
+          this.showFlateDrop = false;
+          this.showTagDrop = false;
+        }
+      },
+
       //请求媒体列表
       getMediaList(){
         let vm = this;

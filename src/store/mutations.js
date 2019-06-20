@@ -30,5 +30,8 @@ export default{
   },
   routeChange(state){
     state.isRouteChange = true;
+  },
+  setCompanyId(state,flag){
+    state.companyId = flag;
   }
 }

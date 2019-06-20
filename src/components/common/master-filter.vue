@@ -1,5 +1,5 @@
 <template>
-    <Select v-model="master" style="width:200px" @on-change="selectChange">
+    <Select v-model="master" style="width:200px" @on-change="selectChange" :disabled="$store.state.companyId !=='1'">
       <Option v-for="item in masterFilter" :value="item.id" :key="item.id">{{ item.name }}</Option>
     </Select>
 </template>

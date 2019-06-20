@@ -24,11 +24,19 @@
   import {browsRouteRegister} from '../../../router/routes'
   export default {
     name: "sidebar-register",
+    props:{
+      routeName:String,
+    },
     data() {
       return {
         browsRouteRegister: [],
-        activeName:"i0-0",
+        activeName:"",
         openArr:['i0'],
+      }
+    },
+    watch:{
+      routeName(value){
+        this.activeName = value;
       }
     },
     mounted() {

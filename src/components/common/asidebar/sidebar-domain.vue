@@ -30,15 +30,17 @@
     name: "asidebar",
     props:{
       setWidth:String,
+      routeName:String,
     },
     data() {
       return {
         browsRoute: [],
-        activeName:"i0-0",
+        activeName:"",
         openArr:['i0'],
       }
     },
     mounted() {
+      this.activeName = this.routeName ? this.routeName : 'i0-0';
       this.browsRoute = Object.keys(browsRoute).map((item) => {
         return browsRoute[item];
       });
