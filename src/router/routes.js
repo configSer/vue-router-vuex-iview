@@ -1,8 +1,7 @@
 import Layout from '@/components/common/layout';
 
 import Media from '@/components/resource-manager/media'
-import MediaAdd from '@/components/resource-manager/media/media-add'
-import MediaEdit from '@/components/resource-manager/media/media-edit'
+import MediaForm from '@/components/resource-manager/media/media-form'
 
 import Channel from '@/components/resource-manager/channel'
 import ChannelAdd from '@/components/resource-manager/channel/channel-add'
@@ -49,13 +48,13 @@ var routes = [
         path: '/index/media/add',
         name: "i0-0-0",
         routeName: "",
-        component: MediaAdd,
+        component: MediaForm,
       },
       {
         path: '/index/media/edit/:id',
         name: "i0-0-1",
         routeName: "",
-        component: MediaEdit,
+        component: MediaForm,
       },
       
       // channel ==============================================

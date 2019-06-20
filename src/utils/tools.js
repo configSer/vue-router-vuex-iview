@@ -49,6 +49,12 @@ let tools = {
       })
     })
   },
+  //请求媒体类型列表
+  getMediaTypeList: function (callback) {
+    fetch('/ssp-manager/v1/media/typeList').then(res => {
+      callback(res.result.lists);
+    })
+  },
   initQuickDate() {
     let currentDate = new Date();
     let list = [];
