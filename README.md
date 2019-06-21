@@ -1,6 +1,6 @@
-# demo1
+# vue + vuex + webpack + es6 + sass + iview
 
-> A Vue.js project
+> 一个后台管理系统的实现
 
 ## Build Setup
 
