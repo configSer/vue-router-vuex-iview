@@ -12,7 +12,12 @@
     name: "tag_index",
     components:{ MasterFilter },
     data() {
-      return {}
+      return {
+        title:'标签',
+      }
+    },
+    mounted(){
+      document.title = this.title;
     },
     methods:{
       selectChange(id){

@@ -28,15 +28,31 @@
         <span class="clear_data" @click="allDataChecked(false)">清空选择</span>
       </Col>
       <Col>
-        <div class="export_btn">
-          <div class="sub_btn sub_btn_4">
-            <div class="sub_export_btn" data-flag="0">按日</div>
-            <div class="sub_export_btn" data-flag="1">按时</div>
-            <div class="sub_export_btn" data-flag="2">按平台</div>
-            <div class="sub_export_btn" data-flag="3">当前视图</div>
-          </div>
-          <Button type="primary" class="btn_name">导出报告</Button>
-        </div>
+        <Row type='flex' justify='space-between' align='middle'>
+          <Col>
+            <div class="custum_btn">
+              <Button type="primary" class="btn_name" @click="setColumns">自定义列</Button>
+              <div class="custum_list_box" v-if="isShowCustumColumns">
+                <Row type="flex" justify="start" align="middle"  >
+                  <Col v-for="item in columns" class="custum_li" :key="item.key">
+                    <Checkbox v-model='item.checked'>{{item.title}}</Checkbox>
+                  </Col>
+                </Row>
+              </div>
+            </div>
+          </Col>
+          <Col>
+            <div class="export_btn">
+              <div class="sub_btn sub_btn_4">
+                <div class="sub_export_btn" data-flag="0">按日</div>
+                <div class="sub_export_btn" data-flag="1">按时</div>
+                <div class="sub_export_btn" data-flag="2">按平台</div>
+                <div class="sub_export_btn" data-flag="3">当前视图</div>
+              </div>
+              <Button type="primary" class="btn_name">导出报告</Button>
+            </div>
+          </Col>
+        </Row>
       </Col>
     </Row>
     <Row class-name="lay_row">
@@ -74,10 +90,12 @@
     components: {MasterFilter, DatePickerCustom, ListData},
     data() {
       return {
+        title:'媒体',
         total:0,
         selectNum:0,
         idList:[],
         isCheckedAll:false,
+        isShowCustumColumns:false,
         //表单提交的数据
         formData: {
           qStr: "",
@@ -110,18 +128,24 @@
             width: 80,
             key: 'id',
             align: 'center',
+            checked:true,
+            disabled:false,
           },
           {
             title: '媒体',
             isShow: true,
             key: 'name',
             align: 'left',
+            checked:true,
+            disabled:false,
           },
           {
             title: '媒体简称',
             isShow: true,
             key: 'shortName',
             align: 'left',
+            checked:true,
+            disabled:false,
           },
           {
             title: '媒体类型',
@@ -129,6 +153,8 @@
             // width:80,
             key: 'mediaType',
             align: 'center',
+            checked:true,
+            disabled:false,
           },
           {
             title: '投放平台',
@@ -136,6 +162,51 @@
             // width:80,
             key: 'platform',
             align: 'center',
+            checked:true,
+            disabled:false,
+          },
+          {
+            title: '曝光量',
+            isShow: true,
+            width: 80,
+            key: 'id',
+            align: 'center',
+            checked:false,
+            disabled:false,
+          },
+          {
+            title: '点击量',
+            isShow: true,
+            key: 'name',
+            align: 'left',
+            checked:false,
+            disabled:false,
+          },
+          {
+            title: '点击率',
+            isShow: true,
+            key: 'shortName',
+            align: 'left',
+            checked:false,
+            disabled:false,
+          },
+          {
+            title: '广告请求量',
+            isShow: true,
+            // width:80,
+            key: 'mediaType',
+            align: 'center',
+            checked:false,
+            disabled:false,
+          },
+          {
+            title: '独立曝光量',
+            isShow: true,
+            // width:80,
+            key: 'platform',
+            align: 'center',
+            checked:false,
+            disabled:false,
           },
         ],
         options: {
@@ -172,12 +243,17 @@
       }
     },
     mounted() {
+      document.title = this.title;
       if(this.$store.state.isRouteChange){
         this.setFormParam({name:'masterIds',value:tools.getGlobal('masterId') ? Number(tools.getGlobal('masterId')) : this.$store.state.masterIds});
         this.getTableData();
       }
     },
     methods: {
+      //设置列显示
+      setColumns(){
+        this.isShowCustumColumns = true;
+      },
       //请求表格数据
       getTableData() {
         let vm = this;

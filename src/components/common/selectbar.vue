@@ -7,10 +7,10 @@
     </div>
     <Row type="flex" justify="center" align="middle" class="drop_down" v-if="isMedia && showDrop">
       <Col :span="22">
-        <Row>
+        <Row v-if="noSearchInput">
           <Col><Input :placeholder="searchPlaceholder" v-model="searchInput" /></Col>
         </Row>
-        <Row type="flex" justify="space-between" align="middle" class="opt_row">
+        <Row type="flex" justify="space-between" align="middle" class="opt_row" v-if="!noCheckBox">
           <Col><span style="cursor: pointer;color:#0c7cd5" @click="checkedAll">全选</span></Col>
           <Col><span >已选{{checkedData.length}}项</span></Col>
         </Row>
@@ -20,14 +20,22 @@
         <Row class="list_box" v-else>
           <Col :span="24">
             <label v-for="item in selectData" :key="item.id">
-              <Row type="flex" align="middle" justify="space-between" class="opt_row">
+              <Row type="flex"
+                   align="middle"
+                   justify="space-between"
+                   :class="item.checked ? 'opt_row checked': 'opt_row'"
+                   @click.native="setFlateForm(item)">
                 <Col :span="20"><div style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">{{item.name}}</div></Col>
-                <Col :span="4"><div><Checkbox v-model="item.checked" @on-change="changeCheckedList(item)"></Checkbox></div></Col>
+                <Col :span="4">
+                  <div v-if="!noCheckBox">
+                    <Checkbox v-model="item.checked" @on-change="changeCheckedList(item)"></Checkbox>
+                  </div>
+                </Col>
               </Row>
             </label>
           </Col>
         </Row>
-        <Row type="flex" justify="space-between" align="middle" class="foot_box">
+        <Row type="flex" justify="space-between" align="middle" class="foot_box" v-if="!noCheckBox">
           <Col><span @click="clearChecked">清除</span></Col>
           <Col><span @click="sureChecked">确定</span></Col>
         </Row>
@@ -46,6 +54,8 @@
       listData: Array,
       showDrop:Boolean,
       dropIndex:String,
+      noCheckBox: Boolean,
+      noSearchInput:Boolean,
     },
     data() {
       return {
@@ -70,8 +80,10 @@
         }
       }
     },
-    mounted() {
-      this.selectData = this.listData.map(item => {return {...item,checked:false}});
+    beforeMount(){
+      if (this.noCheckBox){
+        this.selectData = this.listData.map(item => {return {...item,checked:false}});
+      }
     },
     methods: {
       hideDropDown(){
@@ -91,13 +103,22 @@
       changeCheckedList(item){
         if (item.checked){
           this.checkedData.push(item)
+          this.selectData.forEach(temp =>{
+            if (temp.id === item.id){
+              temp.checked = true;
+            }
+          })
         } else {
+          this.selectData.forEach(temp =>{
+            if (temp.id === item.id){
+              temp.checked = false;
+            }
+          })
           let idArr = this.checkedData.map(item => item.id);
           if (idArr.indexOf(item.id) !== -1) {
             this.checkedData.splice(idArr.indexOf(item.id),1);
           }
         }
-        this.$emit('setSelectData',[this.checkedData,this.dropIndex])
       },
       checkedAll(){
         this.selectData = this.selectData.map(item => {return {...item, checked:true}});
@@ -106,16 +127,15 @@
           if (idArr.indexOf(item.id) === -1){
             this.checkedData.push(item);
           }
-        })
-        this.$emit('setSelectData',[this.checkedData,this.dropIndex])
+        });
       },
       clearChecked(){
         this.checkedData = [];
         this.selectData = this.selectData.map(item => {return {...item,checked:false}});
-        this.$emit('setSelectData',[this.checkedData,this.dropIndex])
       },
       sureChecked(){
         this.isMedia = false;
+        this.$emit('setSelectData',[this.checkedData,this.dropIndex])
       },
       searchChange(){
         this.selectData = [];
@@ -133,6 +153,16 @@
           }
           return item;
         })
+      },
+      setFlateForm(item){
+        if (this.noCheckBox){
+          this.selectData = this.selectData.map(item => {return {...item, checked:false}});
+          this.checkedData = [];
+          item.checked = true;
+          this.changeCheckedList(item);
+          this.hideDropDown();
+          this.$emit('setSelectData',[this.checkedData,this.dropIndex])
+        }
       }
     }
   }

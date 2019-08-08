@@ -1,8 +1,5 @@
 .DS_Store
 node_modules/
-/src/static/style/.sass-cache/
-/src/static/style/index.scss*
-/src/static/style/index.css.map*
 /dist/
 npm-debug.log*
 yarn-debug.log*

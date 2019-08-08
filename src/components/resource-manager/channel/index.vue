@@ -28,6 +28,7 @@
                    dropIndex="2"
                    @dropDown="setShowDrop"
                    @setSelectData="setSelectData"
+                   :noCheckBox="true"
         ></SelectBar>
       </Col>
       <Col class="width_4">
@@ -106,6 +107,7 @@
     components: {MasterFilter, DatePickerCustom, ListData, SelectBar},
     data() {
       return {
+        title:'频道',
         showMediaDrop:false,
         showFlateDrop:false,
         showTagDrop:false,
@@ -134,6 +136,7 @@
           endDate: "",
         },
         plateForm:[
+          {name:'全部',id:''},
           {name:'PC',id:0},
           {name:'WAP',id:1},
           {name:'APP',id:2},
@@ -231,6 +234,7 @@
       }
     },
     mounted() {
+      document.title = this.title;
       if(this.$store.state.isRouteChange){
         this.setFormParam({name:'masterIds',value:tools.getGlobal('masterId') ? Number(tools.getGlobal('masterId')) : this.$store.state.masterId});
         this.getMediaList();
@@ -276,14 +280,15 @@
           method: 'post',
           body: JSON.stringify({masterIds:tools.getGlobal('masterId') ? Number(tools.getGlobal('masterId')) : vm.$store.state.masterId})
         }).then(res => {
-          this.mediaData = res.result.lists;
+          vm.mediaData = res.result.lists;
         })
       },
       //请求投放标签
       getTagList(){
-        let masterId = tools.getGlobal('masterId') ? Number(tools.getGlobal('masterId')) : this.$store.state.masterId;
+        let vm = this;
+        let masterId = tools.getGlobal('masterId') ? Number(tools.getGlobal('masterId')) : vm.$store.state.masterId;
         fetch("/ssp-manager/v1/channel/channelTageList?masterId=" + masterId).then(res => {
-          this.plateTag = res.result.lists;
+          vm.plateTag = res.result.lists;
         })
       },
       //请求表格数据

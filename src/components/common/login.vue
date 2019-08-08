@@ -11,8 +11,8 @@
               label-position="left"
         >
           <Row class-name="logo_tit">
-            <Col><img src="./../../assets/logo配置.png" alt=""></Col>
-            <Col><h2>这是一个平台名称</h2></Col>
+            <Col><img src="./../../assets/logo.png" alt=""></Col>
+            <Col><h2>一站式业务服务平台</h2></Col>
           </Row>
           <Row class-name="err_log" :style="isError ? {visibility:'visible'} : {visibility:'hidden'}">{{errorMsg}}</Row>
           <FormItem label="" prop="username">
@@ -24,7 +24,7 @@
           <FormItem>
             <Button type="primary" @click="handleSubmit('formCustom')">登录</Button>
             <!--<Button  style="margin-left: 1rem">注册</Button>-->
-            <!--<Col>(系统推荐使用Chrome浏览器)</Col>-->
+            <Col>(系统推荐使用Chrome浏览器)</Col>
           </FormItem>
         </Form>
       </Col>

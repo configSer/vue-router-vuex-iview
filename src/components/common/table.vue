@@ -8,7 +8,7 @@
 <script>
 
     import $ from "jquery";
-    import mixins from "../pageComponents/common/mixins.js";
+    import mixins from "../../utils/mixins.js";
 	import {Row,Col,Button,Input,Icon,Menu,Modal,Select,Option,Table,Page,DatePicker,MenuItem,Submenu} from "ui";
 
     export default {

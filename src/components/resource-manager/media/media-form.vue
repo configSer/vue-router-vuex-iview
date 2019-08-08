@@ -13,21 +13,23 @@
       <Col><h4>基本信息</h4></Col>
     </Row>
     <Row>
-      <Col style="width:500px">
-        <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="120">
+      <Col class="form_content">
+        <Form ref="formValidate" :model="formData" :rules="ruleValidate" :label-width="120">
           <FormItem label="媒体名称" prop="mediaName">
-            <Input v-model="formValidate.mediaName"/>
+            <Input v-model="formData.mediaName"/>
+            <span class="length"><span :class="formData.mediaName.length > 50 ? 'color_err': ''">{{formData.mediaName.length}}</span>/50</span>
           </FormItem>
           <FormItem label="媒体简称" prop="mediaShortName">
-            <Input v-model="formValidate.mediaShortName"/>
+            <Input v-model="formData.mediaShortName"/>
+            <span class="length"><span :class="formData.mediaShortName.length > 50 ? 'color_err': ''">{{formData.mediaShortName.length}}</span>/50</span>
           </FormItem>
           <FormItem label="媒体类型" prop="mediaType">
-            <Select v-model="formValidate.mediaType">
+            <Select v-model="formData.mediaType">
               <Option v-for="item in mediaTypeList" :key="item.id" v-model="item.id">{{item.name}}</Option>
             </Select>
           </FormItem>
           <FormItem label="投放平台" prop="plate">
-            <RadioGroup v-model="formValidate.plate">
+            <RadioGroup v-model="formData.plate">
               <Radio :label="0">PC</Radio>
               <Radio :label="1">WAP</Radio>
               <Radio :label="2">APP</Radio>
@@ -35,7 +37,7 @@
             </RadioGroup>
           </FormItem>
           <FormItem label="主页地址" prop="homeUrl">
-            <Input v-model="formValidate.homeUrl" placeholder="http://"/>
+            <Input v-model="formData.homeUrl" placeholder="http://"/>
           </FormItem>
           <FormItem label="库存锁定时间" prop="lock_time">
             <DatePicker type="date"
@@ -43,13 +45,14 @@
                         format="yyyy-MM-dd"
                         placement="bottom-start"
                         style="width:380px;"
-                        v-model="formValidate.lock_time"
+                        v-model="formData.lock_time"
                         :options="optionsDis"
                         :editable="false"
             ></DatePicker>
           </FormItem>
           <FormItem label="备注" prop="note">
-            <Input type="textarea" v-model="formValidate.note" style="min-height:115px"/>
+            <Input type="textarea" v-model="formData.note" class="textarea"/>
+            <span class="length"><span :class="formData.note.length > 100 ? 'color_err': ''">{{formData.note.length}}</span>/100</span>
           </FormItem>
           <FormItem class="btn_group">
             <Row type="flex" align="middle" justify="space-between">
@@ -72,7 +75,9 @@
     name: "media-form",
     data() {
       return {
-        formValidate: {
+        masterId:-100,
+        formData: {
+          masterId:'',
           mediaName: "",
           mediaShortName: "",
           mediaType: "",
@@ -88,7 +93,12 @@
         },
         isEdit: false,
         mediaTypeList: [],
-        ruleValidate: {}
+        ruleValidate: {
+          mediaName:[{required:true,message:'媒体名称不能为空'},{max:50,message:'最多输入50个字符'}],
+          mediaType:[{required:true,message:'媒体类型不能为空'}],
+          plate:[{required:true,message:'投放平台不能为空'}],
+          note:[{max:100,message:'最多输入100个字符'}]
+        }
       }
     },
     watch: {},
@@ -98,7 +108,7 @@
         vm.isEdit = true;
         fetch("/ssp-manager/v1/media/editinfo?id=" + vm.$route.params.id).then(res => {
           let data = res.result;
-          vm.formValidate = {
+          vm.formData = {
             mediaName: data.name ? data.name : "",
             mediaShortName: data.shortname ? data.shortname : "",
             mediaType: data.mediatype ? data.mediatype.toString() : "",
@@ -106,33 +116,50 @@
             homeUrl: data.homepage ? data.homepage : "",
             lock_time: data.enddate,
             note: data.mediadesc ? data.mediadesc : "",
+            masterId : tools.getGlobal('masterId') ? tools.getGlobal('masterId') : vm.$store.state.masterId
           };
         })
       } else {
-        vm.masterId = tools.getGlobal('masterId') ? tools.getGlobal('masterId') : vm.$store.state.masterId;
+        vm.formData.masterId = tools.getGlobal('masterId') ? tools.getGlobal('masterId') : vm.$store.state.masterId;
       }
     },
     mounted() {
       let vm = this;
       tools.getMediaTypeList((list) => {
         if (list.length > 0 && !vm.isEdit) {
-          vm.formValidate.mediaType = list[0].id;
+          vm.formData.mediaType = list[0].id;
         }
         vm.mediaTypeList = list;
       })
     },
     methods: {
       handleSubmit(name) {
+        let vm = this;
         this.$refs[name].validate((valid) => {
           if (valid) {
-            this.$Message.success('Success!');
-          } else {
-            this.$Message.error('Fail!');
+            fetch('/ssp-manager/v1/media/add',{
+              method:'post',
+              body:JSON.stringify(vm.formData)
+            }).then(res => {
+                this.$Message.success('保存成功');
+                window.close();
+            },err => {
+              this.$Message.error(err.errorMsg)
+            });
           }
         })
       },
       handleReset(name) {
-        this.$refs[name].resetFields();
+        this.$Modal.confirm({
+          title:'是否取消当前页修改',
+          okText:'确定',
+          cancelText:'取消',
+          onOk:()=>{
+            window.close();
+          }
+        })
+
+
       }
     }
   }
