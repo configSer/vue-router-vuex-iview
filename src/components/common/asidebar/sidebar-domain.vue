@@ -1,5 +1,5 @@
 <template>
-    <Menu theme="light"
+    <Menu theme="dark"
           mode="vertical"
           ref="side_menu"
           accordion
@@ -10,12 +10,10 @@
     >
       <Submenu v-for="item in browsRoute" :key="item.routeName" :name="item.name">
         <template slot="title">
-          <img :src="item.icon" alt="">
           {{item.routeName}}
         </template>
         <router-link v-for="temp in item.children" :to="temp.path" :key="temp.routeName">
           <MenuItem :name="temp.name">
-            <img :src="temp.icon" alt="">
             {{temp.routeName}}
           </MenuItem>
         </router-link>

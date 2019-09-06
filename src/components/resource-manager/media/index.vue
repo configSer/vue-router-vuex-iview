@@ -29,18 +29,18 @@
       </Col>
       <Col>
         <Row type='flex' justify='space-between' align='middle'>
-          <Col>
-            <div class="custum_btn">
-              <Button type="primary" class="btn_name" @click="setColumns">自定义列</Button>
-              <div class="custum_list_box" v-if="isShowCustumColumns">
-                <Row type="flex" justify="start" align="middle"  >
-                  <Col v-for="item in columns" class="custum_li" :key="item.key">
-                    <Checkbox v-model='item.checked'>{{item.title}}</Checkbox>
-                  </Col>
-                </Row>
-              </div>
-            </div>
-          </Col>
+          <!--<Col>-->
+            <!--<div class="custum_btn">-->
+              <!--<Button type="primary" class="btn_name" @click="setColumns">自定义列</Button>-->
+              <!--<div class="custum_list_box" v-if="isShowCustumColumns">-->
+                <!--<Row type="flex" justify="start" align="middle"  >-->
+                  <!--<Col v-for="item in columns" class="custum_li" :key="item.key">-->
+                    <!--<Checkbox v-model='item.isShow'>{{item.title}}</Checkbox>-->
+                  <!--</Col>-->
+                <!--</Row>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</Col>-->
           <Col>
             <div class="export_btn">
               <div class="sub_btn sub_btn_4">
@@ -122,92 +122,16 @@
           pageSizeOpts: [10, 20, 40, 70, 100],
         },
         columns: [
-          {
-            title: '编号',
-            isShow: true,
-            width: 80,
-            key: 'id',
-            align: 'center',
-            checked:true,
-            disabled:false,
-          },
-          {
-            title: '媒体',
-            isShow: true,
-            key: 'name',
-            align: 'left',
-            checked:true,
-            disabled:false,
-          },
-          {
-            title: '媒体简称',
-            isShow: true,
-            key: 'shortName',
-            align: 'left',
-            checked:true,
-            disabled:false,
-          },
-          {
-            title: '媒体类型',
-            isShow: true,
-            // width:80,
-            key: 'mediaType',
-            align: 'center',
-            checked:true,
-            disabled:false,
-          },
-          {
-            title: '投放平台',
-            isShow: true,
-            // width:80,
-            key: 'platform',
-            align: 'center',
-            checked:true,
-            disabled:false,
-          },
-          {
-            title: '曝光量',
-            isShow: true,
-            width: 80,
-            key: 'id',
-            align: 'center',
-            checked:false,
-            disabled:false,
-          },
-          {
-            title: '点击量',
-            isShow: true,
-            key: 'name',
-            align: 'left',
-            checked:false,
-            disabled:false,
-          },
-          {
-            title: '点击率',
-            isShow: true,
-            key: 'shortName',
-            align: 'left',
-            checked:false,
-            disabled:false,
-          },
-          {
-            title: '广告请求量',
-            isShow: true,
-            // width:80,
-            key: 'mediaType',
-            align: 'center',
-            checked:false,
-            disabled:false,
-          },
-          {
-            title: '独立曝光量',
-            isShow: true,
-            // width:80,
-            key: 'platform',
-            align: 'center',
-            checked:false,
-            disabled:false,
-          },
+          {title: '编号', isShow: true, width: 80, key: 'id', align: 'center', checked:true, disabled:false,},
+          {title: '媒体', isShow: true, key: 'name', align: 'left', checked:true, disabled:false,},
+          {title: '媒体简称', isShow: true, key: 'shortName', align: 'left', checked:true, disabled:false,},
+          {title: '媒体类型', isShow: true, key: 'mediaType', align: 'center', checked:true, disabled:false,},
+          {title: '投放平台', isShow: true, key: 'platform', align: 'center', checked:true, disabled:false,},
+          // {title: '曝光量', isShow: true, key: 'id', align: 'center', checked:false, disabled:false,},
+          // {title: '点击量', isShow: true, key: 'name', align: 'left', checked:false, disabled:false,},
+          // {title: '点击率', isShow: true, key: 'shortName', align: 'left', checked:false, disabled:false,},
+          // {title: '广告请求量', isShow: true, key: 'mediaType', align: 'center', checked:false, disabled:false,},
+          // {title: '独立曝光量', isShow: true, key: 'platform', align: 'center', checked:false, disabled:false,},
         ],
         options: {
           edit: {
@@ -252,7 +176,7 @@
     methods: {
       //设置列显示
       setColumns(){
-        this.isShowCustumColumns = true;
+        this.isShowCustumColumns = !this.isShowCustumColumns;
       },
       //请求表格数据
       getTableData() {

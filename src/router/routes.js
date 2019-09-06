@@ -1,23 +1,23 @@
-import Layout from '@/components/common/layout';
+import Layout from '@/pages/common/layout';
 
-import Media from '@/components/resource-manager/media'
-import MediaForm from '@/components/resource-manager/media/media-form'
+import Media from '@/pages/resource-manager/media'
+import MediaForm from '@/pages/resource-manager/media/media-form'
 
-import Channel from '@/components/resource-manager/channel'
-import ChannelAdd from '@/components/resource-manager/channel/channel-add'
-import ChannelEdit from '@/components/resource-manager/channel/channel-edit'
+import Channel from '@/pages/resource-manager/channel'
+import ChannelAdd from '@/pages/resource-manager/channel/channel-add'
+import ChannelEdit from '@/pages/resource-manager/channel/channel-edit'
 
-import Placement from '@/components/resource-manager/placement'
-import Tag from '@/components/resource-manager/tag'
+import Placement from '@/pages/resource-manager/placement'
+import Tag from '@/pages/resource-manager/tag'
 
-import Block from '@/components/resource-deployment/block'
-import Grade from '@/components/resource-deployment/grade'
-import Rotation from '@/components/resource-deployment/rotation'
+import Block from '@/pages/resource-deployment/block'
+import Grade from '@/pages/resource-deployment/grade'
+import Rotation from '@/pages/resource-deployment/rotation'
 
-import DSP from '@/components/DSP-management/dsp-manager'
+import DSP from '@/pages/DSP-management/dsp-manager'
 
-import Nofond from '@/components/common/notfontd'
-import Login from '@/components/common/login'
+import Nofond from '@/pages/common/notfontd'
+import Login from '@/pages/common/login'
 
 var routes = [
   {
@@ -150,31 +150,26 @@ export const browsRoute = {
     redirect: "/index/media",
     name: 'i0',
     routeName: "资源管理",
-    icon: require('./../../static/icon/ziyuan.svg'),
     children: [
       {
         path: '/index/media',
         name: "i0-0",
         routeName: "媒体",
-        icon: require('./../../static/icon/media.svg'),
       },
       {
         path: '/index/channel',
         name: "i0-1",
         routeName: "频道",
-        icon: require('./../../static/icon/channel.svg'),
       },
       {
         path: '/index/placement',
         name: "i0-2",
         routeName: "广告位",
-        icon: require('./../../static/icon/place.svg'),
       },
       {
         path: '/index/tag',
         name: "i0-3",
         routeName: "标签",
-        icon: require('./../../static/icon/tag.svg'),
       }
     ]
   },
@@ -183,25 +178,21 @@ export const browsRoute = {
     redirect: "/deployment/block",
     name: "i1",
     routeName: "资源部署",
-    icon: require('./../../static/icon/ziyuan_1.svg'),
     children: [
       {
         path: "/deployment/block",
         name: "i1-0",
         routeName: "广告块",
-        icon: require('./../../static/icon/blocks.svg'),
       },
       {
         path: "/deployment/rotation",
         name: "i1-1",
         routeName: "轮播关系",
-        icon: require('./../../static/icon/lunbo.svg'),
       },
       {
         path: "/deployment/grade",
         name: "i1-2",
         routeName: "车型级别关系",
-        icon: require('./../../static/icon/car.svg'),
       }
     ]
   },
@@ -210,7 +201,6 @@ export const browsRoute = {
     redirect: "/dsp/index",
     name: "i2",
     routeName: "DSP管理",
-    icon: require('./../../static/icon/dianshangpingtaikaifa.svg'),
   }
 };
 export const browsRouteRegister = {

@@ -18,6 +18,7 @@
                    dropIndex="1"
                    @dropDown="setShowDrop"
                    @setSelectData="setSelectData"
+                   :noSearchInput="true"
         ></SelectBar>
       </Col>
       <Col class="width_4">
@@ -39,11 +40,12 @@
                    dropIndex="3"
                    @dropDown="setShowDrop"
                    @setSelectData="setSelectData"
+                   :noSearchInput="true"
         ></SelectBar>
       </Col>
     </Row>
     <Row class-name="lay_row">
-      <Col class="width_8">
+      <Col class="width_7">
         <Input v-model="formData.channel"
                :search="true"
                suffix="ios-search"
@@ -203,11 +205,11 @@
         options: {
           edit: {
             name: "编辑",
-            callback: this.mediaEdit,
+            callback: this.channelEdit,
           },
           delete: {
             name: "删除",
-            callback: this.mediaDelete,
+            callback: this.channelDelete,
           },
         },
         checkedDataArr: [],
@@ -276,20 +278,16 @@
       //请求媒体列表
       getMediaList(){
         let vm = this;
-        fetch("/ssp-manager/v1/media_filter/list", {
-          method: 'post',
-          body: JSON.stringify({masterIds:tools.getGlobal('masterId') ? Number(tools.getGlobal('masterId')) : vm.$store.state.masterId})
-        }).then(res => {
-          vm.mediaData = res.result.lists;
+        let masterId = tools.getGlobal('masterId') ? Number(tools.getGlobal('masterId')) : vm.$store.state.masterId;
+        tools.getMediaList(masterId,function (list) {
+          vm.mediaData = list;
         })
       },
       //请求投放标签
       getTagList(){
         let vm = this;
         let masterId = tools.getGlobal('masterId') ? Number(tools.getGlobal('masterId')) : vm.$store.state.masterId;
-        fetch("/ssp-manager/v1/channel/channelTageList?masterId=" + masterId).then(res => {
-          vm.plateTag = res.result.lists;
-        })
+        tools.getTagList(masterId,function (list) {vm.plateTag = list})
       },
       //请求表格数据
       getTableData() {
@@ -312,10 +310,10 @@
       newCreatTemp() {
         tools.newWinRoute("/index/channel/add");
       },
-      mediaEdit(id) {
+      channelEdit(id) {
         tools.newWinRoute("/index/channel/edit/" + id);
       },
-      mediaDelete(id) {
+      channelDelete(id) {
         let vm = this;
         fetch(`/ssp-manager/v1/media/checkDelSource?id=${id}&type=2`).then(res => {
           vm.$Message.info({content:'请调用删除接口',duration:3})

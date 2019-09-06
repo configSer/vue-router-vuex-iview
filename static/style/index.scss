@@ -1,6 +1,7 @@
+$hoverBorder:#57a3f3;
 html, body, #app {
   height: 100%;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 #app {
@@ -97,7 +98,6 @@ html, body, #app {
     height: 100%;
     padding-top: 75px;
     z-index: 888;
-    -background: #363E4F;
     >ul{
       height:100%;
     }
@@ -132,8 +132,8 @@ html, body, #app {
     border-right: 1px solid #7e8c8d;
     padding-right: 2rem;
     margin-right: 2rem;
-    height: 35px;
-    margin-top: 1rem;
+    height: 24px;
+    margin-top: 19px;
   }
 
   .log_tit {
@@ -281,12 +281,15 @@ html, body, #app {
   .select_box{
     width:100%;
     max-width:20rem;
-    height:3rem;
+    height:32px;
     border-radius:4px;
     border:1px solid #ccc;
     background:#fff;
-    line-height:3rem;
+    line-height:32px;
     text-indent: 1rem;
+    &:hover{
+      border-color:$hoverBorder;
+    }
     span{
       color:#515a6e
     }
@@ -303,11 +306,6 @@ html, body, #app {
     max-height:40rem;
     border:1px solid #ccc;
     padding: 1rem 0 0;
-  }
-  .list_box{
-    max-height:200px;
-    overflow-y: scroll;
-    overflow-x: hidden;
     .opt_row{
       padding:.5rem 0 .5rem .5rem;
       &:hover{
@@ -317,6 +315,11 @@ html, body, #app {
         background:#efeffe;
       }
     }
+  }
+  .list_box{
+    max-height:200px;
+    overflow-y: scroll;
+    overflow-x: hidden;
   }
   .foot_box{
     height:50px;

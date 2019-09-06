@@ -1,6 +1,6 @@
 <template>
   <Layout class="layout_all">
-    <HeadTemp :username="username" :isLogin="isLogin"></HeadTemp>
+    <HeadTemp :username="username"></HeadTemp>
     <Layout class="layout_content">
       <Domain v-if="companyId === '1'"  class="layout_side" :companyId="companyId" :routeName="activeName"></Domain>
       <Register v-else  class="layout_side" :companyId="companyId" :routeName="activeName"></Register>
@@ -34,7 +34,6 @@
       return {
         username: "",
         companyId: "",
-        isLogin: true,
         activeName:'i0-0'
       }
     },
@@ -45,14 +44,6 @@
     },
     mounted() {
       let vm = this;
-      let type = tools.getGlobal('type');
-      if (type && type === '1') {
-        vm.$store.dispatch('showLogin');
-        vm.isLogin = true;
-      } else {
-        vm.$store.dispatch('hideLogin');
-        vm.isLogin = false;
-      }
       tools.getUserInfo().then((res) => {
         vm.username = res.result.name;
         vm.companyId = res.result.companyId;

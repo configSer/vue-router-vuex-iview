@@ -9,7 +9,7 @@ import md5 from 'js-md5';
 import fetch from './utils/fetch'
 import 'iview/dist/styles/iview.css'
 import './../static/js/rem.js'
-import './../static/style/index.css'
+import './../static/style/index.scss'
 Vue.config.productionTip = false;
 Vue.use(IView);
 Vue.prototype.$md5 = md5;

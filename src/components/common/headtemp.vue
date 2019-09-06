@@ -26,22 +26,25 @@
     name: "headtemp",
     props:{
       username:String,
-      isLogin:Boolean,
     },
     data() {
       return {}
     },
-    watch:{
-      // isLogin(value) {
-      //   !value && this.logout();
-      // }
-    },
     methods:{
       logout(){
-        fetch("/common-portal/common/portal/logout").then(res => {
-          this.$store.dispatch('hideLogin');
-          // this.$router.push("/login")
+        let vm = this;
+        vm.$Modal.confirm({
+          title: "登出",
+          content: '确定退出登录吗？',
+          onOk() {
+            fetch("/common-portal/common/portal/logout").then(res => {
+              vm.$store.dispatch('hideLogin');
+              vm.$router.push("/login")
+            })
+          },
+          onCancel(){}
         })
+
       },
       toPersonal(){
         this.$store.dispatch('personal',true)

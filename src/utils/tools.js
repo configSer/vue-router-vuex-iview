@@ -30,6 +30,34 @@ let tools = {
     let host = window.location.protocol + "//" + window.location.host + window.location.pathname;
     window.open(host + "#" + url, "_blank");
   },
+  modalMessage: function (message, cancelHandler, okHandler) {
+    let str = '<div class="message">' +
+      '<div class="message_box">' +
+      '<p>' + message + '</p>' +
+      '</div>' +
+      '<p class="options">' +
+      '<span class="modal_btn cancel">取消</span>' +
+      '<span class="modal_btn ok">确定</span>' +
+      '</p>' +
+      '</div>';
+    let tip = document.createElement("div");
+    tip.className = "modalDialog";
+    tip.innerHTML = str;
+    
+    document.body.appendChild(tip);
+    tip.querySelector(".cancel").onclick = function () {
+      document.body.removeChild(tip);
+      if (cancelHandler) {
+        cancelHandler();
+      }
+    }
+    tip.querySelector(".ok").onclick = function () {
+      document.body.removeChild(tip);
+      if (okHandler) {
+        okHandler();
+      }
+    }
+  },
   getUserInfo(){
     return new Promise((resolve,reject) => {
       fetch("/ssp-manager/v1/user/list").then(res => {
@@ -55,6 +83,22 @@ let tools = {
       callback(res.result.lists);
     })
   },
+  //请求媒体列表
+  getMediaList(masterId,callback){
+    fetch("/ssp-manager/v1/media_filter/list", {
+      method: 'post',
+      body: JSON.stringify({masterIds:masterId})
+    }).then(res => {
+      callback(res.result.lists)
+    })
+  },
+  //请求投放标签
+  getTagList(masterId,callback){
+    fetch("/ssp-manager/v1/channel/channelTageList?masterId=" + masterId).then(res => {
+      callback(res.result.lists)
+    })
+  },
+  
   initQuickDate() {
     let currentDate = new Date();
     let list = [];
